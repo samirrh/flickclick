@@ -25,4 +25,9 @@ public class ComparisonService {
         return comparisonRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Comparison with id: " + id + " not found"));
     }
+
+    public Long postComparison(Comparison comparison) {
+        comparisonRepository.save(comparison);
+        return comparison.getId();
+    }
 }
