@@ -1,7 +1,18 @@
 package sh.io.flickclick.comparison;
 
-//@Entity
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Comparison {
+    @Id
+    @SequenceGenerator(name = "comparison_sequence", sequenceName = "comparison_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comparison_sequence")
     private Long id;
     private String senderEmail;
     private String[] senderMovies;

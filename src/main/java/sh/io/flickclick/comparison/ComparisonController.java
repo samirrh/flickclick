@@ -1,15 +1,35 @@
 package sh.io.flickclick.comparison;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "api/compare")
-public class ComparisonController {
+// API layer makes requests , uses service layer to get data etc
 
-    @GetMapping
-    public Comparison getComparison() {
-        return new Comparison(1L, "samir@gmail.com", new String[] { "123", "456" });
+public class ComparisonController {
+    private final ComparisonService comparisonService;
+
+    @Autowired
+    public ComparisonController(ComparisonService comparisonService) {
+        this.comparisonService = comparisonService;
     }
+
+    @GetMapping(path = "all")
+    public List<Comparison> getComparisons(@RequestParam("email") String email) {
+        return comparisonService.getComparisons(email);
+    }
+
+    @GetMapping(path = "{id}")
+    public Comparison getComparison(@PathVariable("id") Long id) {
+        return comparisonService.getComparisonById(id);
+    }
+
 }
