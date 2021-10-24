@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 //Service layer has business logic
 
@@ -29,5 +30,26 @@ public class ComparisonService {
     public Long postComparison(Comparison comparison) {
         comparisonRepository.save(comparison);
         return comparison.getId();
+    }
+
+    @Transactional
+    public Long updateComparison(Long id, String recipientEmail, String[] recipientMovies) {
+        Comparison comparison = comparisonRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with id:" + id + "not found"));
+        comparison.setRecipientEmail(recipientEmail);
+        comparison.setRecipientMovies(recipientMovies);
+        String[] senderMovies = comparison.getSenderMovies();
+        String[] inCommon = new String[5];
+        int inCommonIndex = 0;
+        for (String senderMovie : senderMovies) {
+            for (String recipientMovie : recipientMovies) {
+                if (senderMovie.equals(recipientMovie)) {
+                    inCommon[inCommonIndex] = senderMovie;
+                    inCommonIndex += 1;
+                }
+            }
+        }
+        Long out = (long) inCommonIndex;
+        return out;
     }
 }

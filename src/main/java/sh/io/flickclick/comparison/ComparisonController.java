@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,5 +38,11 @@ public class ComparisonController {
     @PostMapping()
     public Long postComparison(@RequestBody Comparison comparison) {
         return comparisonService.postComparison(comparison);
+    }
+
+    @PutMapping(path = "{id}")
+    public Long updateComparison(@PathVariable Long id, @RequestParam String recipientEmail,
+            @RequestParam String[] recipientMovies) {
+        return comparisonService.updateComparison(id, recipientEmail, recipientMovies);
     }
 }
