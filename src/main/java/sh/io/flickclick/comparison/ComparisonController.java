@@ -1,5 +1,6 @@
 package sh.io.flickclick.comparison;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class ComparisonController {
     }
 
     @PutMapping(path = "recipient/{id}")
-    public Long addRecipientData(@PathVariable Long id, @RequestParam String recipientEmail,
+    public ArrayList<String> addRecipientData(@PathVariable Long id, @RequestParam String recipientEmail,
             @RequestParam String[] recipientMovies) {
         return comparisonService.addRecipientData(id, recipientEmail, recipientMovies);
     }

@@ -1,5 +1,6 @@
 package sh.io.flickclick.comparison;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,23 +34,21 @@ public class ComparisonService {
     }
 
     @Transactional
-    public Long addRecipientData(Long id, String recipientEmail, String[] recipientMovies) {
+    public ArrayList<String> addRecipientData(Long id, String recipientEmail, String[] recipientMovies) {
         Comparison comparison = comparisonRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("User with id:" + id + "not found"));
         comparison.setRecipientEmail(recipientEmail);
         comparison.setRecipientMovies(recipientMovies);
         String[] senderMovies = comparison.getSenderMovies();
-        String[] inCommon = new String[5];
-        int inCommonIndex = 0;
+        ArrayList<String> inCommon = new ArrayList<String>();
         for (String senderMovie : senderMovies) {
             for (String recipientMovie : recipientMovies) {
                 if (senderMovie.equals(recipientMovie)) {
-                    inCommon[inCommonIndex] = senderMovie;
-                    inCommonIndex += 1;
+                    inCommon.add(senderMovie);
                 }
             }
         }
-        Long out = (long) inCommonIndex;
-        return out;
+
+        return inCommon;
     }
 }
