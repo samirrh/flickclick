@@ -33,7 +33,7 @@ public class ComparisonService {
     }
 
     @Transactional
-    public Long updateComparison(Long id, String recipientEmail, String[] recipientMovies) {
+    public Long addRecipientData(Long id, String recipientEmail, String[] recipientMovies) {
         Comparison comparison = comparisonRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("User with id:" + id + "not found"));
         comparison.setRecipientEmail(recipientEmail);

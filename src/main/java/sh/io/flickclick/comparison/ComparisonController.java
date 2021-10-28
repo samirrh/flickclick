@@ -40,9 +40,9 @@ public class ComparisonController {
         return comparisonService.postComparison(comparison);
     }
 
-    @PutMapping(path = "{id}")
-    public Long updateComparison(@PathVariable Long id, @RequestParam String recipientEmail,
+    @PutMapping(path = "recipient/{id}")
+    public Long addRecipientData(@PathVariable Long id, @RequestParam String recipientEmail,
             @RequestParam String[] recipientMovies) {
-        return comparisonService.updateComparison(id, recipientEmail, recipientMovies);
+        return comparisonService.addRecipientData(id, recipientEmail, recipientMovies);
     }
 }
